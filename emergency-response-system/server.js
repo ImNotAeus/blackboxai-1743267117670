@@ -3,12 +3,27 @@ const bodyParser = require('body-parser');
 const path = require('path');
 const fs = require('fs');
 const twilio = require('twilio');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const app = express();
 const PORT = process.env.PORT || 8000;
 const CONTACTS_FILE = path.join(__dirname, 'contacts.json');
+const SECRET_KEY = process.env.JWT_SECRET || 'emergency-secret-key';
+
+// JWT Authentication Middleware
+function authenticateToken(req, res, next) {
+    const authHeader = req.headers['authorization'];
+    const token = authHeader && authHeader.split(' ')[1];
+    
+    if (!token) return res.sendStatus(401);
+    
+    jwt.verify(token, SECRET_KEY, (err, user) => {
+        if (err) return res.sendStatus(403);
+        req.user = user;
+        next();
+    });
+}
 
 /* 
 // Twilio Configuration (uncomment and fill in your credentials)
