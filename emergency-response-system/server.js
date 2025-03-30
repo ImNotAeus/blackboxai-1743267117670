@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const app = express();
 const PORT = process.env.PORT || 8000;
 const CONTACTS_FILE = path.join(__dirname, 'contacts.json');
+const USERS_FILE = path.join(__dirname, 'users.json');
 const SECRET_KEY = process.env.JWT_SECRET || 'emergency-secret-key';
 
 // JWT Authentication Middleware
