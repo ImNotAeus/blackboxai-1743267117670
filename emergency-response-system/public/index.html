@@ -4,14 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emergency Response System</title>
+    <% if (process.env.NODE_ENV === 'production') { %>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {}
+        }
+      }
+    </script>
+    <% } else { %>
+      <script src="https://cdn.tailwindcss.com"></script>
+    <% } %>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body class="bg-gray-100 min-h-screen">
     <div class="container mx-auto p-4 max-w-md">
         <h1 class="text-3xl font-bold text-center text-red-600 mb-8">Emergency Response</h1>
         
+        <!-- Emergency Type Selection -->
+        <div class="emergency-types grid grid-cols-3 gap-4 mb-6 hidden" id="emergencyTypeSelection">
+            <button class="emergency-type medical bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-lg shadow-md transition-all" data-type="medical">
+                <i class="fas fa-heart-pulse text-2xl mb-1"></i><br>Medical
+            </button>
+            <button class="emergency-type police bg-blue-800 hover:bg-blue-900 text-white font-bold py-4 px-4 rounded-lg shadow-md transition-all" data-type="police">
+                <i class="fas fa-shield-alt text-2xl mb-1"></i><br>Police
+            </button>
+            <button class="emergency-type fire bg-red-700 hover:bg-red-800 text-white font-bold py-4 px-4 rounded-lg shadow-md transition-all" data-type="fire">
+                <i class="fas fa-fire-extinguisher text-2xl mb-1"></i><br>Fire
+            </button>
+        </div>
+
         <!-- SOS Button -->
         <div class="flex justify-center mb-8">
             <button id="sosButton" class="bg-red-600 hover:bg-red-700 text-white font-bold py-16 px-16 rounded-full text-2xl shadow-lg transform hover:scale-105 transition-transform">
